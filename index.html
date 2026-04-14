@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Moodle LMS — Diagram Alur Sistem | Dokumentasi Skripsi</title>
 <style>
 /* ═══════════════════════════════════════════════
@@ -28,240 +28,469 @@
 }
 
 /* ═══ RESET & BASE ═══ */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior: smooth; }
+body {
   font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
   background:var(--bg); color:var(--ink);
-  padding:2rem 1.5rem; font-size:14px;
+  padding:1.5rem 1rem;
+  font-size:14px;
+  -webkit-text-size-adjust:100%;
 }
-
-/* ═══ HEADER ═══ */
-.doc-header{
-  background:var(--term-bg); color:var(--term-tx);
-  border-radius:16px; padding:2.5rem 2rem 2rem;
-  text-align:center; margin-bottom:2.5rem; box-shadow:var(--sh);
-}
-.doc-header h1{font-size:1.65rem;font-weight:800;letter-spacing:-.5px;margin-bottom:.4rem;}
-.doc-header .sub{font-size:.85rem;color:#94a3b8;margin-bottom:1.5rem;}
-.legend{
-  display:flex;flex-wrap:wrap;gap:1rem;
-  justify-content:center;padding-top:1.25rem;
-  border-top:1px solid #334155;
-}
-.leg{display:flex;align-items:center;gap:.45rem;font-size:.75rem;color:#cbd5e1;}
-.leg-sq{width:18px;height:12px;border-radius:3px;border:2px solid;flex-shrink:0;}
-.leg-dia{width:14px;height:14px;border:2px solid;transform:rotate(45deg);border-radius:2px;flex-shrink:0;}
 
 /* ═══════════════════════════════════════════════
-   SECTION CARD  +  HOVER EFFECTS
+   HEADER
 ═══════════════════════════════════════════════ */
-.section{
+.doc-header {
+  background:var(--term-bg); color:var(--term-tx);
+  border-radius:16px; padding:2rem 1.5rem 1.75rem;
+  text-align:center; margin-bottom:2rem; box-shadow:var(--sh);
+}
+.doc-header h1 {
+  font-size:1.45rem; font-weight:800; letter-spacing:-.5px;
+  margin-bottom:.4rem; line-height:1.3;
+}
+.doc-header .sub { font-size:.8rem; color:#94a3b8; margin-bottom:1.25rem; line-height:1.6; }
+.legend {
+  display:flex; flex-wrap:wrap; gap:.65rem;
+  justify-content:center; padding-top:1rem;
+  border-top:1px solid #334155;
+}
+.leg { display:flex; align-items:center; gap:.4rem; font-size:.72rem; color:#cbd5e1; }
+.leg-sq { width:16px; height:11px; border-radius:3px; border:2px solid; flex-shrink:0; }
+.leg-dia { width:12px; height:12px; border:2px solid; transform:rotate(45deg); border-radius:2px; flex-shrink:0; }
+
+/* ═══════════════════════════════════════════════
+   NAV PILLS (mobile quick-jump)
+═══════════════════════════════════════════════ */
+.nav-pills {
+  display:flex; flex-wrap:nowrap; gap:.5rem;
+  overflow-x:auto; padding:.5rem 0 .75rem;
+  margin-bottom:1.5rem;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.nav-pills::-webkit-scrollbar { display:none; }
+.nav-pill {
+  flex-shrink:0;
+  padding:.38rem .85rem;
+  border-radius:20px;
+  border:1.5px solid var(--rule);
+  background:#fff;
+  font-size:.72rem; font-weight:700; color:var(--muted);
+  text-decoration:none;
+  white-space:nowrap;
+  transition:background .18s, color .18s, border-color .18s;
+}
+.nav-pill:hover, .nav-pill:active { background:var(--term-bg); color:#fff; border-color:var(--term-bg); }
+
+/* ═══════════════════════════════════════════════
+   SECTION CARD
+═══════════════════════════════════════════════ */
+.section {
   background:var(--card);
   border-radius:16px;
   border:1px solid var(--rule);
   border-left:5px solid #e2e8f0;
   box-shadow:var(--sh);
-  padding:2rem;
-  margin-bottom:2.5rem;
+  padding:1.5rem;
+  margin-bottom:2rem;
   transition:
     transform .28s cubic-bezier(.22,.68,0,1.2),
     box-shadow .28s ease,
     border-left-color .22s ease;
   cursor:default;
   position:relative;
+  scroll-margin-top:16px;
 }
-.section:hover{
-  transform:translateY(-6px);
-  box-shadow:var(--sh-h);
+/* Desktop hover lift */
+@media(hover:hover){
+  .section:hover { transform:translateY(-6px); box-shadow:var(--sh-h); }
+  .s1:hover { border-left-color:#2563eb; }
+  .s2:hover { border-left-color:#16a34a; }
+  .s3:hover { border-left-color:#7c3aed; }
+  .s4:hover { border-left-color:#dc2626; }
+  .s5:hover { border-left-color:#ca8a04; }
+  .s1:hover .sec-num { background:#2563eb; }
+  .s2:hover .sec-num { background:#16a34a; }
+  .s3:hover .sec-num { background:#7c3aed; }
+  .s4:hover .sec-num { background:#dc2626; }
+  .s5:hover .sec-num { background:#ca8a04; }
+  .section:hover .hover-info { max-height:280px; opacity:1; margin-top:.9rem; }
 }
-
-/* Unique accent per section */
-.s1:hover{ border-left-color:#2563eb; }
-.s2:hover{ border-left-color:#16a34a; }
-.s3:hover{ border-left-color:#7c3aed; }
-.s4:hover{ border-left-color:#dc2626; }
-.s5:hover{ border-left-color:#ca8a04; }
-
-/* Numbered badge colour on hover */
-.s1:hover .sec-num{ background:#2563eb; }
-.s2:hover .sec-num{ background:#16a34a; }
-.s3:hover .sec-num{ background:#7c3aed; }
-.s4:hover .sec-num{ background:#dc2626; }
-.s5:hover .sec-num{ background:#ca8a04; }
+/* Touch active state instead of hover */
+.section.active-touch { border-left-color:#2563eb; box-shadow:var(--sh-h); }
+.s1.active-touch { border-left-color:#2563eb; }
+.s2.active-touch { border-left-color:#16a34a; }
+.s3.active-touch { border-left-color:#7c3aed; }
+.s4.active-touch { border-left-color:#dc2626; }
+.s5.active-touch { border-left-color:#ca8a04; }
+.s1.active-touch .sec-num { background:#2563eb; }
+.s2.active-touch .sec-num { background:#16a34a; }
+.s3.active-touch .sec-num { background:#7c3aed; }
+.s4.active-touch .sec-num { background:#dc2626; }
+.s5.active-touch .sec-num { background:#ca8a04; }
+.active-touch .hover-info { max-height:400px !important; opacity:1 !important; margin-top:.9rem !important; }
 
 /* ─── HOVER EXPLANATION PANEL ─── */
-.hover-info{
-  max-height:0;
-  overflow:hidden;
-  opacity:0;
+.hover-info {
+  max-height:0; overflow:hidden; opacity:0;
   transition:max-height .38s ease, opacity .28s ease, margin-top .28s ease;
   margin-top:0;
 }
-.section:hover .hover-info{
-  max-height:220px;
-  opacity:1;
-  margin-top:.9rem;
+.hover-info-inner {
+  background:#f8fafc; border:1px solid var(--rule);
+  border-radius:10px; padding:.85rem 1rem;
+  font-size:.77rem; color:#475569; line-height:1.7;
 }
-.hover-info-inner{
-  background:#f8fafc;
-  border:1px solid var(--rule);
-  border-radius:10px;
-  padding:.9rem 1.2rem;
-  font-size:.79rem;
-  color:#475569;
-  line-height:1.7;
+.hover-info-inner strong {
+  display:block; font-size:.68rem; font-weight:800;
+  letter-spacing:.6px; text-transform:uppercase;
+  margin-bottom:.4rem; color:var(--ink);
 }
-.hover-info-inner strong{
-  display:block;
-  font-size:.7rem;
-  font-weight:800;
-  letter-spacing:.6px;
-  text-transform:uppercase;
-  margin-bottom:.4rem;
-  color:var(--ink);
+.s1 .hover-info-inner { border-left:4px solid #2563eb; }
+.s2 .hover-info-inner { border-left:4px solid #16a34a; }
+.s3 .hover-info-inner { border-left:4px solid #7c3aed; }
+.s4 .hover-info-inner { border-left:4px solid #dc2626; }
+.s5 .hover-info-inner { border-left:4px solid #ca8a04; }
+
+/* ─── TAP HINT (mobile only) ─── */
+.tap-hint {
+  display:none;
+  font-size:.66rem; color:var(--muted);
+  margin-top:.5rem; text-align:right;
+  font-style:italic;
 }
-.s1 .hover-info-inner{ border-left:4px solid #2563eb; }
-.s2 .hover-info-inner{ border-left:4px solid #16a34a; }
-.s3 .hover-info-inner{ border-left:4px solid #7c3aed; }
-.s4 .hover-info-inner{ border-left:4px solid #dc2626; }
-.s5 .hover-info-inner{ border-left:4px solid #ca8a04; }
 
 /* ─── SECTION HEAD ─── */
-.section-head{
-  display:flex;align-items:flex-start;gap:.85rem;
-  padding-bottom:1rem;margin-bottom:.5rem;
+.section-head {
+  display:flex; align-items:flex-start; gap:.75rem;
+  padding-bottom:.85rem; margin-bottom:.5rem;
   border-bottom:2px solid var(--rule);
 }
-.sec-num{
-  width:34px;height:34px;border-radius:50%;
-  background:var(--term-bg);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-size:.8rem;font-weight:700;flex-shrink:0;margin-top:2px;
+.sec-num {
+  width:32px; height:32px; border-radius:50%;
+  background:var(--term-bg); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.78rem; font-weight:700; flex-shrink:0; margin-top:2px;
   transition:background .22s ease;
 }
-.sec-title{font-size:1.1rem;font-weight:700;color:var(--ink);}
-.sec-desc {font-size:.78rem;color:var(--muted);margin-top:.2rem;}
-.sec-note {font-size:.72rem;color:var(--muted);margin-bottom:2rem;font-style:italic;}
+.sec-title { font-size:1rem; font-weight:700; color:var(--ink); line-height:1.3; }
+.sec-desc  { font-size:.75rem; color:var(--muted); margin-top:.25rem; line-height:1.5; }
+.sec-note  { font-size:.7rem; color:var(--muted); margin-bottom:1.5rem; font-style:italic; line-height:1.5; }
 
-/* ═══ FLOWCHART ═══ */
-.fc{display:flex;flex-direction:column;align-items:center;}
+/* ═══════════════════════════════════════════════
+   FLOWCHART CANVAS
+═══════════════════════════════════════════════ */
+.fc { display:flex; flex-direction:column; align-items:center; overflow:visible; }
+
+/* Scrollable wrapper on narrow screens */
+.fc-scroll {
+  width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  padding-bottom:.5rem;
+}
+.fc-inner { display:flex; flex-direction:column; align-items:center; min-width:min-content; }
 
 /* ─── NODES ─── */
-.node{
-  display:inline-flex;align-items:center;justify-content:center;
-  text-align:center;border:2.5px solid;border-radius:var(--r);
-  padding:.55rem 1.1rem;font-size:.75rem;font-weight:700;
-  min-width:170px;max-width:230px;line-height:1.35;
-  box-shadow:0 2px 8px rgba(0,0,0,.10);position:relative;z-index:1;
+.node {
+  display:inline-flex; align-items:center; justify-content:center;
+  text-align:center; border:2.5px solid; border-radius:var(--r);
+  padding:.5rem 1rem; font-size:.73rem; font-weight:700;
+  min-width:160px; max-width:220px; line-height:1.35;
+  box-shadow:0 2px 8px rgba(0,0,0,.10); position:relative; z-index:1;
   transition:transform .16s ease, box-shadow .16s ease;
 }
-.node:hover{transform:scale(1.05);box-shadow:0 5px 16px rgba(0,0,0,.18);}
-.node small{font-weight:500;display:block;margin-top:1px;font-size:.68rem;opacity:.85;}
-.node.inp { background:var(--input-bg); border-color:var(--input-bd); color:var(--input-tx); }
-.node.proc{ background:var(--proc-bg);  border-color:var(--proc-bd);  color:var(--proc-tx);  }
-.node.out { background:var(--out-bg);   border-color:var(--out-bd);   color:var(--out-tx);   }
-.node.err { background:var(--err-bg);   border-color:var(--err-bd);   color:var(--err-tx);   }
-.node.term{
-  background:var(--term-bg);border-color:#0f172a;color:#fff;
-  border-radius:50px;min-width:110px;max-width:150px;
-  font-size:.78rem;letter-spacing:.5px;
+@media(hover:hover){
+  .node:hover { transform:scale(1.05); box-shadow:0 5px 16px rgba(0,0,0,.18); }
 }
-.node.end-nd{background:#0f172a;}
-.node.sm{min-width:120px;max-width:148px;font-size:.69rem;padding:.45rem .75rem;}
+.node small { font-weight:500; display:block; margin-top:1px; font-size:.66rem; opacity:.85; }
+.node.inp  { background:var(--input-bg); border-color:var(--input-bd); color:var(--input-tx); }
+.node.proc { background:var(--proc-bg);  border-color:var(--proc-bd);  color:var(--proc-tx);  }
+.node.out  { background:var(--out-bg);   border-color:var(--out-bd);   color:var(--out-tx);   }
+.node.err  { background:var(--err-bg);   border-color:var(--err-bd);   color:var(--err-tx);   }
+.node.term {
+  background:var(--term-bg); border-color:#0f172a; color:#fff;
+  border-radius:50px; min-width:100px; max-width:140px;
+  font-size:.75rem; letter-spacing:.5px;
+}
+.node.end-nd { background:#0f172a; }
+.node.sm { min-width:110px; max-width:140px; font-size:.67rem; padding:.4rem .65rem; }
 
 /* ─── DIAMOND ─── */
-.dia-wrap{display:flex;align-items:center;justify-content:center;}
-.diamond{
-  width:128px;height:128px;flex-shrink:0;
-  background:var(--dec-bg);border:2.5px solid var(--dec-bd);
+.dia-wrap { display:flex; align-items:center; justify-content:center; }
+.diamond {
+  width:118px; height:118px; flex-shrink:0;
+  background:var(--dec-bg); border:2.5px solid var(--dec-bd);
   transform:rotate(45deg);
-  display:flex;align-items:center;justify-content:center;
+  display:flex; align-items:center; justify-content:center;
   box-shadow:0 2px 8px rgba(0,0,0,.10);
   transition:box-shadow .16s;
 }
-.diamond:hover{box-shadow:0 5px 18px rgba(234,88,12,.3);}
-.diamond.sm{width:108px;height:108px;}
-.dia-txt{
+@media(hover:hover){
+  .diamond:hover { box-shadow:0 5px 18px rgba(234,88,12,.3); }
+}
+.diamond.sm { width:100px; height:100px; }
+.dia-txt {
   transform:rotate(-45deg);
-  font-size:.7rem;font-weight:700;color:var(--dec-tx);
-  text-align:center;line-height:1.3;max-width:90px;padding:4px;
+  font-size:.67rem; font-weight:700; color:var(--dec-tx);
+  text-align:center; line-height:1.3; max-width:82px; padding:4px;
 }
 
 /* ─── ARROWS ─── */
-.arr{display:flex;flex-direction:column;align-items:center;}
-.arr-line{width:2px;background:var(--arr);}
-.arr .arr-line{height:28px;}
-.arr-head{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:10px solid var(--arr);}
-.arr.loop .arr-line{background:var(--loop);height:18px;}
-.arr.loop .arr-head{border-top-color:var(--loop);}
-.loop-lbl{font-size:.68rem;font-weight:700;color:var(--loop);font-style:italic;display:flex;align-items:center;gap:3px;}
-
-/* ─── BRANCH ─── */
-.branch-outer{display:flex;flex-direction:column;align-items:center;width:100%;}
-.t-bar{display:flex;flex-direction:row;align-items:flex-start;justify-content:center;width:100%;}
-.t-seg{display:flex;flex-direction:column;align-items:center;flex:1;}
-.t-line-h{height:2px;background:var(--arr);width:100%;}
-.t-line-v{width:2px;background:var(--arr);height:24px;}
-.t-arr-down{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:10px solid var(--arr);}
-.b-col{display:flex;flex-direction:column;align-items:center;}
-.yes-lbl,.no-lbl,.b-lbl{
-  font-size:.68rem;font-weight:800;padding:2px 8px;
-  border-radius:20px;border:1px solid;white-space:nowrap;margin:4px 0;
+.arr { display:flex; flex-direction:column; align-items:center; }
+.arr-line { width:2px; background:var(--arr); }
+.arr .arr-line { height:24px; }
+.arr-head { width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-top:9px solid var(--arr); }
+.arr.loop .arr-line { background:var(--loop); height:16px; }
+.arr.loop .arr-head { border-top-color:var(--loop); }
+.loop-lbl {
+  font-size:.65rem; font-weight:700; color:var(--loop);
+  font-style:italic; display:flex; align-items:center; gap:3px;
+  text-align:center; max-width:200px;
 }
-.yes-lbl{color:#dc2626;background:#fff5f5;border-color:#fca5a5;}
-.no-lbl {color:#16a34a;background:#f0fdf4;border-color:#86efac;}
-.b-lbl.low {color:#dc2626;background:#fff5f5;border-color:#fca5a5;}
-.b-lbl.med {color:#92400e;background:#fffbeb;border-color:#fcd34d;}
-.b-lbl.high{color:#16a34a;background:#f0fdf4;border-color:#86efac;}
 
-.mini-arr{display:flex;flex-direction:column;align-items:center;}
-.mini-arr .arr-line{height:18px;}
-.node-row{display:flex;flex-direction:row;gap:8px;flex-wrap:wrap;justify-content:center;}
-.nested-b-row{display:flex;flex-direction:row;gap:12px;align-items:flex-start;justify-content:center;}
-.nested-b-col{display:flex;flex-direction:column;align-items:center;}
+/* ─── BRANCH — DESKTOP (side-by-side) ─── */
+.branch-outer { display:flex; flex-direction:column; align-items:center; width:100%; }
+.t-bar { display:flex; flex-direction:row; align-items:flex-start; justify-content:center; width:100%; }
+.t-seg { display:flex; flex-direction:column; align-items:center; flex:1; }
+.t-line-h { height:2px; background:var(--arr); width:100%; }
+.t-line-v { width:2px; background:var(--arr); height:22px; }
+.t-arr-down { width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-top:9px solid var(--arr); }
+.b-cols { display:flex; flex-direction:row; width:100%; gap:0; align-items:flex-start; justify-content:space-between; }
+.b-col { display:flex; flex-direction:column; align-items:center; flex:1; }
+
+/* ─── BRANCH LABELS ─── */
+.yes-lbl,.no-lbl,.b-lbl {
+  font-size:.66rem; font-weight:800; padding:2px 8px;
+  border-radius:20px; border:1px solid; white-space:nowrap; margin:4px 0;
+}
+.yes-lbl { color:#dc2626; background:#fff5f5; border-color:#fca5a5; }
+.no-lbl  { color:#16a34a; background:#f0fdf4; border-color:#86efac; }
+.b-lbl.low  { color:#dc2626; background:#fff5f5; border-color:#fca5a5; }
+.b-lbl.med  { color:#92400e; background:#fffbeb; border-color:#fcd34d; }
+.b-lbl.high { color:#16a34a; background:#f0fdf4; border-color:#86efac; }
+
+/* mini arrow */
+.mini-arr { display:flex; flex-direction:column; align-items:center; }
+.mini-arr .arr-line { height:16px; }
+
+/* node row (horizontal tags) */
+.node-row { display:flex; flex-direction:row; gap:6px; flex-wrap:wrap; justify-content:center; }
+
+/* nested branches */
+.nested-b-row { display:flex; flex-direction:row; gap:10px; align-items:flex-start; justify-content:center; }
+.nested-b-col { display:flex; flex-direction:column; align-items:center; }
+
+/* ─── MOBILE BRANCH DIVIDER ─── */
+/* Used on mobile to separate stacked branch sections visually */
+.mob-branch-sep {
+  display:none;
+  align-items:center; gap:.5rem;
+  width:90%; margin:.2rem 0;
+  font-size:.62rem; font-weight:700; color:var(--muted);
+  white-space:nowrap;
+}
+.mob-branch-sep::before,
+.mob-branch-sep::after {
+  content:''; flex:1; height:1px; background:var(--rule);
+}
+
+/* ─── SECTION BADGE (mobile top tag) ─── */
+.sec-badge {
+  display:none;
+  position:absolute; top:-1px; right:16px;
+  font-size:.6rem; font-weight:800; letter-spacing:.5px;
+  text-transform:uppercase; padding:3px 10px;
+  border-radius:0 0 8px 8px;
+  color:#fff;
+}
+.s1 .sec-badge { background:#2563eb; }
+.s2 .sec-badge { background:#16a34a; }
+.s3 .sec-badge { background:#7c3aed; }
+.s4 .sec-badge { background:#dc2626; }
+.s5 .sec-badge { background:#ca8a04; }
 
 /* ═══ FOOTER ═══ */
-footer{text-align:center;padding:2rem 1rem 1rem;font-size:.75rem;color:var(--muted);}
-footer p+p{margin-top:.3rem;}
+footer {
+  text-align:center; padding:1.5rem .5rem 1rem;
+  font-size:.72rem; color:var(--muted);
+}
+footer p+p { margin-top:.3rem; }
+
+/* ═══════════════════════════════════════════════
+   TABLET  (≤900px)
+═══════════════════════════════════════════════ */
+@media(max-width:900px){
+  .doc-header h1 { font-size:1.25rem; }
+  .node { font-size:.71rem; min-width:140px; max-width:195px; }
+  .node.sm { min-width:100px; max-width:130px; font-size:.65rem; }
+  .diamond { width:108px; height:108px; }
+  .diamond.sm { width:92px; height:92px; }
+  .dia-txt { font-size:.63rem; max-width:76px; }
+}
+
+/* ═══════════════════════════════════════════════
+   MOBILE  (≤600px)  — MAIN RESPONSIVE RULES
+═══════════════════════════════════════════════ */
+@media(max-width:600px){
+
+  /* Base */
+  body { padding:1rem .75rem; font-size:13px; }
+
+  /* Header */
+  .doc-header { padding:1.5rem 1rem 1.25rem; border-radius:12px; margin-bottom:1.25rem; }
+  .doc-header h1 { font-size:1.05rem; }
+  .doc-header .sub { font-size:.72rem; margin-bottom:1rem; }
+  .legend { gap:.5rem; }
+  .leg { font-size:.67rem; }
+
+  /* Nav pills */
+  .nav-pills { margin-bottom:1.25rem; }
+  .nav-pill { font-size:.68rem; padding:.32rem .7rem; }
+
+  /* Section */
+  .section { padding:1.1rem .9rem; border-radius:12px; margin-bottom:1.5rem; border-left-width:4px; }
+  .sec-badge { display:block; }
+  .tap-hint { display:block; }
+
+  /* Section head */
+  .sec-num { width:28px; height:28px; font-size:.72rem; }
+  .sec-title { font-size:.9rem; }
+  .sec-desc { font-size:.7rem; }
+  .sec-note { font-size:.67rem; margin-bottom:1.1rem; }
+
+  /* Hover panel */
+  .hover-info-inner { font-size:.72rem; padding:.75rem .85rem; }
+  .hover-info-inner strong { font-size:.63rem; }
+
+  /* Nodes */
+  .node {
+    font-size:.68rem; padding:.45rem .85rem;
+    min-width:130px; max-width:210px;
+    border-width:2px;
+  }
+  .node.sm { min-width:90px; max-width:125px; font-size:.63rem; padding:.38rem .55rem; }
+  .node.term { min-width:85px; max-width:115px; font-size:.7rem; }
+
+  /* Diamond */
+  .diamond { width:100px; height:100px; }
+  .diamond.sm { width:86px; height:86px; }
+  .dia-txt { font-size:.6rem; max-width:70px; }
+
+  /* Arrows */
+  .arr .arr-line { height:18px; }
+  .mini-arr .arr-line { height:12px; }
+  .arr-head { border-left-width:5px; border-right-width:5px; border-top-width:8px; }
+
+  /* node-row: wrap to 2 columns on mobile */
+  .node-row { gap:5px; }
+  .node-row .node.sm { flex:1 1 calc(50% - 5px); max-width:none; min-width:0; }
+
+  /* ════ BRANCH: Stack vertically on mobile ════ */
+  /* Hide the horizontal T-bar on mobile */
+  .t-bar { display:none; }
+
+  /* Stack branch columns */
+  .b-cols {
+    flex-direction:column !important;
+    align-items:center;
+    gap:0;
+    width:100%;
+  }
+  .b-col {
+    width:100%;
+    flex:none;
+    padding:0 !important;
+  }
+
+  /* Show mobile separator between stacked branches */
+  .mob-branch-sep { display:flex; }
+
+  /* Add top connector line for each stacked column (replaces T-bar) */
+  .b-col::before {
+    content:'';
+    display:block;
+    width:2px;
+    height:16px;
+    background:var(--arr);
+    margin:0 auto;
+  }
+
+  /* nested branches also stack */
+  .nested-b-row { flex-direction:column; align-items:center; gap:4px; }
+  .nested-b-col { width:100%; }
+  .nested-b-col .node { max-width:100%; width:90%; }
+
+  /* Loop label centred */
+  .loop-lbl { font-size:.62rem; text-align:center; justify-content:center; }
+
+  /* branch-outer full width */
+  .branch-outer { width:100% !important; max-width:100% !important; }
+}
+
+/* ═══════════════════════════════════════════════
+   EXTRA SMALL  (≤380px)
+═══════════════════════════════════════════════ */
+@media(max-width:380px){
+  body { padding:.75rem .5rem; }
+  .doc-header h1 { font-size:.95rem; }
+  .node { font-size:.63rem; min-width:110px; padding:.4rem .7rem; }
+  .node.sm { font-size:.6rem; min-width:80px; }
+  .diamond { width:88px; height:88px; }
+  .dia-txt { font-size:.56rem; max-width:62px; }
+  .section { padding:.9rem .7rem; }
+  .node-row .node.sm { flex:1 1 calc(50% - 4px); font-size:.58rem; }
+}
 </style>
 </head>
 <body>
 
 <!-- ══════════════ HEADER ══════════════ -->
 <header class="doc-header">
-  <h1>🎓Flowchart Ide Pengembangan LMS Kelompok 8</h1>
+  <h1>🎓 Flowchart Ide Pengembangan LMS Kelompok 8</h1>
   <p class="sub">Muhammad Abdee Nur Fatih &nbsp;·&nbsp; Kiki Zakiah Al Makrufah &nbsp;·&nbsp; Thalita Clarissa Bertha</p>
   <div class="legend">
-    <div class="leg"><div class="leg-sq" style="background:var(--input-bg);border-color:var(--input-bd);"></div>Masukan / Pemicu</div>
-    <div class="leg"><div class="leg-sq" style="background:var(--proc-bg);border-color:var(--proc-bd);"></div>Proses / Tugas</div>
-    <div class="leg"><div class="leg-dia" style="background:var(--dec-bg);border-color:var(--dec-bd);"></div>Gerbang Keputusan</div>
-    <div class="leg"><div class="leg-sq" style="background:var(--out-bg);border-color:var(--out-bd);"></div>Keluaran / Hasil</div>
-    <div class="leg"><div class="leg-sq" style="background:var(--err-bg);border-color:var(--err-bd);"></div>Kesalahan / Peringatan</div>
-    <div class="leg"><div class="leg-sq" style="background:var(--term-bg);border-color:#0f172a;border-radius:10px;"></div>Mulai / Selesai</div>
+    <div class="leg"><div class="leg-sq" style="background:var(--input-bg);border-color:var(--input-bd);"></div>Masukan</div>
+    <div class="leg"><div class="leg-sq" style="background:var(--proc-bg);border-color:var(--proc-bd);"></div>Proses</div>
+    <div class="leg"><div class="leg-dia" style="background:var(--dec-bg);border-color:var(--dec-bd);"></div>Keputusan</div>
+    <div class="leg"><div class="leg-sq" style="background:var(--out-bg);border-color:var(--out-bd);"></div>Keluaran</div>
+    <div class="leg"><div class="leg-sq" style="background:var(--err-bg);border-color:var(--err-bd);"></div>Kesalahan</div>
+    <div class="leg"><div class="leg-sq" style="background:var(--term-bg);border-color:#0f172a;border-radius:10px;"></div>Mulai/Selesai</div>
   </div>
 </header>
 
+<!-- ══════════════ QUICK NAV ══════════════ -->
+<nav class="nav-pills" aria-label="Navigasi sistem" style="text-align: center;">
+  <a class="nav-pill" href="#s1" >① Optimasi UX</a>
+  <a class="nav-pill" href="#s2" >② Adaptif</a>
+  <a class="nav-pill" href="#s3" >③ Asisten Suara</a>
+  <a class="nav-pill" href="#s4" >④ Deteksi Curang</a>
+  <a class="nav-pill" href="#s5" >⑤ Pembuat Konten</a>
+</nav>
 
-<!-- ══════════════════════════════════════════════════
-     SISTEM 1 — OPTIMASI UX PADA MOODLE LMS
-══════════════════════════════════════════════════ -->
-<section class="section s1">
+
+<!-- ══════════════════════════════════════════════
+     SISTEM 1 — OPTIMASI UX
+══════════════════════════════════════════════ -->
+<section class="section s1" id="s1">
+  <div class="sec-badge">Sistem 1</div>
   <div class="section-head">
     <div class="sec-num">1</div>
     <div>
       <div class="sec-title">Optimasi UX pada Moodle LMS</div>
-      <div class="sec-desc">Melacak interaksi pengguna, menganalisis metrik keterlibatan, dan memicu siklus redesain UI secara iteratif hingga pengalaman pengguna yang optimal tercapai.</div>
+      <div class="sec-desc">Melacak interaksi pengguna, menganalisis keterlibatan, dan memicu siklus redesain UI secara iteratif hingga UX optimal.</div>
     </div>
   </div>
 
   <div class="hover-info">
     <div class="hover-info-inner">
       <strong>💡 Penjelasan Sistem</strong>
-      Sistem ini berjalan secara berkelanjutan untuk memantau cara pengguna berinteraksi dengan Moodle LMS. Data seperti klik, jalur navigasi, dan waktu di setiap halaman dikumpulkan lalu dianalisis oleh mesin analitik. Jika antarmuka dinilai kurang optimal, sistem memulai proses redesain: identifikasi titik masalah → redesain komponen → implementasi → uji A/B → penerapan. Jika UX sudah memadai, sistem melanjutkan pemantauan pasif dan menjadwalkan analisis ulang secara berkala.
+      Sistem ini berjalan berkelanjutan untuk memantau interaksi pengguna dengan Moodle LMS. Data klik, jalur navigasi, dan waktu di halaman dikumpulkan lalu dianalisis. Jika antarmuka dinilai kurang optimal, sistem memulai redesain: identifikasi masalah → redesain → implementasi → uji A/B → penerapan. Jika UX sudah memadai, sistem melanjutkan pemantauan pasif dan menjadwalkan analisis ulang berkala.
     </div>
   </div>
+  <p class="tap-hint">👆 Ketuk kartu untuk melihat penjelasan</p>
 
-  <p class="sec-note" style="margin-top:.85rem;">Loop utama: Redesain UI → Uji A/B → Lacak ulang &nbsp;|&nbsp; Tidak perlu redesain → Pemantauan pasif → Analisis ulang berkala</p>
+  <p class="sec-note" style="margin-top:.75rem;">Loop: Redesain → Uji A/B → Lacak ulang &nbsp;|&nbsp; Tidak perlu redesain → Pemantauan pasif</p>
 
   <div class="fc">
     <div class="node term">▶ MULAI</div>
@@ -271,15 +500,12 @@ footer p+p{margin-top:.3rem;}
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
     <div class="node proc">📡 Lacak Interaksi Pengguna
-      <small>(Klik · Jalur navigasi · Waktu di halaman)</small>
+      <small>(Klik · Navigasi · Waktu di Halaman)</small>
     </div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
     <div class="node proc">🗄️ Kumpulkan &amp; Simpan Data Interaksi</div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-
-    <!-- <div class="node proc">🔍 Jalankan Mesin Analisis Keterlibatan</div>
-    <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div> -->
 
     <div class="node proc">📋 Buat Laporan Analitik UX</div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
@@ -288,14 +514,16 @@ footer p+p{margin-top:.3rem;}
       <div class="diamond"><div class="dia-txt">Perlu Perbaikan UX?</div></div>
     </div>
 
-    <div class="branch-outer" style="max-width:720px;width:100%;">
+    <!-- BRANCH -->
+    <div class="branch-outer" style="max-width:700px;width:100%;">
       <div class="t-bar">
         <div class="t-seg" style="align-items:flex-end;"><div class="t-line-h"></div></div>
         <div class="t-seg" style="align-items:flex-start;"><div class="t-line-h"></div></div>
       </div>
-      <div style="display:flex;flex-direction:row;width:100%;gap:0;align-items:flex-start;justify-content:space-between;">
+      <div class="b-cols">
 
-        <div class="b-col" style="flex:1;padding:0 1rem;">
+        <!-- YA -->
+        <div class="b-col" style="flex:1;padding:0 .75rem;">
           <div class="t-line-v"></div><div class="t-arr-down"></div>
           <div class="yes-lbl">✗ YA — Perlu Redesain</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
@@ -312,7 +540,10 @@ footer p+p{margin-top:.3rem;}
           <div class="loop-lbl">↺ Ulangi → Lacak Interaksi Kembali</div>
         </div>
 
-        <div class="b-col" style="flex:1;padding:0 1rem;">
+        <div class="mob-branch-sep">— ATAU —</div>
+
+        <!-- TIDAK -->
+        <div class="b-col" style="flex:1;padding:0 .75rem;">
           <div class="t-line-v"></div><div class="t-arr-down"></div>
           <div class="no-lbl">✓ TIDAK — Sistem Sudah Baik</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
@@ -327,32 +558,34 @@ footer p+p{margin-top:.3rem;}
       </div>
     </div>
 
-    <div class="arr" style="margin-top:12px;"><div class="arr-line"></div><div class="arr-head"></div></div>
+    <div class="arr" style="margin-top:10px;"><div class="arr-line"></div><div class="arr-head"></div></div>
     <div class="node term end-nd">■ SELESAI</div>
   </div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════════
-     SISTEM 2 — SISTEM PEMBELAJARAN ADAPTIF
-══════════════════════════════════════════════════ -->
-<section class="section s2">
+<!-- ══════════════════════════════════════════════
+     SISTEM 2 — PEMBELAJARAN ADAPTIF
+══════════════════════════════════════════════ -->
+<section class="section s2" id="s2">
+  <div class="sec-badge">Sistem 2</div>
   <div class="section-head">
     <div class="sec-num">2</div>
     <div>
       <div class="sec-title">Sistem Pembelajaran Adaptif</div>
-      <div class="sec-desc">Mengevaluasi hasil kuis mahasiswa dan secara dinamis mengarahkan mereka ke jalur materi yang sesuai dengan loop evaluasi ulang berkelanjutan.</div>
+      <div class="sec-desc">Mengevaluasi hasil kuis dan mengarahkan peserta didik ke jalur materi yang sesuai dengan loop evaluasi ulang berkelanjutan.</div>
     </div>
   </div>
 
   <div class="hover-info">
     <div class="hover-info-inner">
       <strong>💡 Penjelasan Sistem</strong>
-      Sistem pembelajaran adaptif menyesuaikan konten belajar berdasarkan hasil kuis mahasiswa. Nilai dikategorikan menjadi tiga tingkat: Rendah (di bawah 60%), Sedang (60–80%), dan Tinggi (di atas 80%). Setiap tingkat mendapat jalur materi berbeda — dari materi remedial dengan dukungan AI Tutor, kurikulum standar dengan latihan interaktif, hingga materi tingkat lanjut dan tugas pengayaan. Setelah menyelesaikan modul, mahasiswa dievaluasi kembali untuk menentukan kelanjutan belajarnya.
+      Sistem ini menyesuaikan konten belajar berdasarkan hasil kuis. Nilai dikategorikan: Rendah (&lt;60%), Sedang (60–80%), dan Tinggi (&gt;80%). Setiap tingkat mendapat jalur berbeda — remedial dengan AI Tutor, kurikulum standar interaktif, atau materi lanjutan dan pengayaan. Setelah modul selesai, peserta dievaluasi ulang untuk menentukan kelanjutan belajar.
     </div>
   </div>
+  <p class="tap-hint">👆 Ketuk kartu untuk melihat penjelasan</p>
 
-  <p class="sec-note" style="margin-top:.85rem;">Tingkatan nilai: RENDAH &lt;60% · SEDANG 60–80% · TINGGI &gt;80% &nbsp;|&nbsp; Semua jalur berulang ke evaluasi ulang</p>
+  <p class="sec-note" style="margin-top:.75rem;">Tingkatan nilai: RENDAH &lt;60% · SEDANG 60–80% · TINGGI &gt;80%</p>
 
   <div class="fc">
     <div class="node term">▶ MULAI</div>
@@ -373,24 +606,26 @@ footer p+p{margin-top:.3rem;}
     <div class="node proc">🧮 Hitung &amp; Normalisasi Nilai</div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
-    <div class="node proc">📈 Perbarui Catatan Kemajuan Peserta Didik</div>
+    <div class="node proc">📈 Perbarui Catatan Kemajuan</div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
     <div class="dia-wrap">
       <div class="diamond"><div class="dia-txt">Evaluasi Tingkat Nilai?</div></div>
     </div>
 
+    <!-- 3-WAY BRANCH -->
     <div class="branch-outer" style="max-width:860px;width:100%;">
       <div class="t-bar">
         <div class="t-seg" style="align-items:flex-end;"><div class="t-line-h"></div></div>
         <div class="t-seg" style="width:2px;background:var(--arr);flex:0 0 2px;"></div>
         <div class="t-seg" style="align-items:flex-start;"><div class="t-line-h"></div></div>
       </div>
-      <div style="display:flex;flex-direction:row;width:100%;gap:0;align-items:flex-start;justify-content:space-between;">
+      <div class="b-cols">
 
-        <div class="b-col" style="flex:1;padding:0 .75rem;">
+        <!-- RENDAH -->
+        <div class="b-col" style="flex:1;padding:0 .6rem;">
           <div class="t-line-v"></div><div class="t-arr-down"></div>
-          <div class="b-lbl low">🔴 RENDAH — Nilai &lt;60%</div>
+          <div class="b-lbl low">🔴 RENDAH — &lt;60%</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="node proc">📚 Berikan Materi Remedial</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
@@ -403,9 +638,12 @@ footer p+p{margin-top:.3rem;}
           <div class="loop-lbl">↺ Ulangi Kuis</div>
         </div>
 
-        <div class="b-col" style="flex:1;padding:0 .75rem;">
+        <div class="mob-branch-sep">— ATAU —</div>
+
+        <!-- SEDANG -->
+        <div class="b-col" style="flex:1;padding:0 .6rem;">
           <div class="t-line-v"></div><div class="t-arr-down"></div>
-          <div class="b-lbl med">🟡 SEDANG — Nilai 60–80%</div>
+          <div class="b-lbl med">🟡 SEDANG — 60–80%</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="node proc">📒 Berikan Kurikulum Standar</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
@@ -418,9 +656,12 @@ footer p+p{margin-top:.3rem;}
           <div class="loop-lbl">↺ Kuis Topik Berikutnya</div>
         </div>
 
-        <div class="b-col" style="flex:1;padding:0 .75rem;">
+        <div class="mob-branch-sep">— ATAU —</div>
+
+        <!-- TINGGI -->
+        <div class="b-col" style="flex:1;padding:0 .6rem;">
           <div class="t-line-v"></div><div class="t-arr-down"></div>
-          <div class="b-lbl high">🟢 TINGGI — Nilai &gt;80%</div>
+          <div class="b-lbl high">🟢 TINGGI — &gt;80%</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="node proc">🚀 Berikan Materi Tingkat Lanjut</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
@@ -435,32 +676,34 @@ footer p+p{margin-top:.3rem;}
       </div>
     </div>
 
-    <div class="arr" style="margin-top:12px;"><div class="arr-line"></div><div class="arr-head"></div></div>
+    <div class="arr" style="margin-top:10px;"><div class="arr-line"></div><div class="arr-head"></div></div>
     <div class="node term end-nd">■ SELESAI</div>
   </div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════════
-     SISTEM 3 — ASISTEN PEMBELAJARAN BERBASIS SUARA
-══════════════════════════════════════════════════ -->
-<section class="section s3">
+<!-- ══════════════════════════════════════════════
+     SISTEM 3 — ASISTEN SUARA
+══════════════════════════════════════════════ -->
+<section class="section s3" id="s3">
+  <div class="sec-badge">Sistem 3</div>
   <div class="section-head">
     <div class="sec-num">3</div>
     <div>
       <div class="sec-title">Asisten Pembelajaran Berbasis Suara</div>
-      <div class="sec-desc">Menangkap input suara, mengonversinya ke teks, memvalidasi perintah, memproses maksud, dan mengembalikan respons ucapan. Penanganan kesalahan &amp; loop percobaan ulang disertakan.</div>
+      <div class="sec-desc">Menangkap input suara, mengonversinya ke teks, memvalidasi perintah, memproses maksud, dan mengembalikan respons ucapan dengan penanganan kesalahan lengkap.</div>
     </div>
   </div>
 
   <div class="hover-info">
     <div class="hover-info-inner">
       <strong>💡 Penjelasan Sistem</strong>
-      Asisten ini memungkinkan mahasiswa berinteraksi dengan Moodle LMS menggunakan perintah suara. Input suara diubah menjadi teks melalui teknologi Speech-to-Text (STT). Teks yang dihasilkan divalidasi: jika perintah tidak dikenali akibat kebisingan atau maksud yang tidak dipahami, sistem meminta pengguna untuk mengulang. Jika perintah valid, sistem mengurai maksud, mengambil data dari basis data Moodle, menghasilkan respons yang relevan, dan menyampaikannya kembali melalui Text-to-Speech (TTS).
+      Asisten ini memungkinkan interaksi dengan Moodle LMS menggunakan perintah suara. Input diubah menjadi teks via Speech-to-Text (STT). Teks divalidasi: jika tidak dikenali akibat kebisingan atau maksud tak dipahami, sistem meminta pengulangan. Jika valid, sistem mengurai maksud, mengambil data dari Moodle, menghasilkan respons kontekstual, dan menyampaikannya kembali via Text-to-Speech (TTS).
     </div>
   </div>
+  <p class="tap-hint">👆 Ketuk kartu untuk melihat penjelasan</p>
 
-  <p class="sec-note" style="margin-top:.85rem;">Jalur kesalahan mengulang kembali ke input suara &nbsp;|&nbsp; Perintah valid dilanjutkan ke keluaran TTS</p>
+  <p class="sec-note" style="margin-top:.75rem;">Jalur kesalahan → coba lagi &nbsp;|&nbsp; Perintah valid → keluaran TTS</p>
 
   <div class="fc">
     <div class="node term">▶ MULAI</div>
@@ -482,46 +725,50 @@ footer p+p{margin-top:.3rem;}
       <div class="diamond"><div class="dia-txt">Perintah Valid Terdeteksi?</div></div>
     </div>
 
-    <div class="branch-outer" style="max-width:740px;width:100%;">
+    <div class="branch-outer" style="max-width:720px;width:100%;">
       <div class="t-bar">
         <div class="t-seg" style="align-items:flex-end;"><div class="t-line-h"></div></div>
         <div class="t-seg" style="align-items:flex-start;"><div class="t-line-h"></div></div>
       </div>
-      <div style="display:flex;flex-direction:row;width:100%;gap:0;align-items:flex-start;justify-content:space-between;">
+      <div class="b-cols">
 
-        <div class="b-col" style="flex:1;padding:0 1rem;">
+        <!-- TIDAK VALID -->
+        <div class="b-col" style="flex:1;padding:0 .75rem;">
           <div class="t-line-v"></div><div class="t-arr-down"></div>
-          <div class="yes-lbl">✗ TIDAK VALID — Tidak Dikenali</div>
+          <div class="yes-lbl">✗ TIDAK VALID</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-          <div class="node err">⚠️ Kesalahan: Perintah Tidak Dikenali</div>
+          <div class="node err">⚠️ Perintah Tidak Dikenali</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="dia-wrap">
             <div class="diamond sm"><div class="dia-txt">Jenis Kesalahan?</div></div>
           </div>
-          <div class="mini-arr"><div class="arr-line" style="height:14px;"></div></div>
+          <div class="mini-arr"><div class="arr-line" style="height:12px;"></div></div>
           <div class="nested-b-row">
             <div class="nested-b-col">
-              <div class="b-lbl low" style="font-size:.63rem;">🔇 Kebisingan Audio</div>
+              <div class="b-lbl low" style="font-size:.61rem;">🔇 Noise</div>
               <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-              <div class="node err" style="min-width:110px;max-width:135px;font-size:.68rem;">Filter &amp; Hilangkan Kebisingan</div>
+              <div class="node err" style="min-width:95px;max-width:125px;font-size:.63rem;">Filter &amp; Denoise</div>
             </div>
             <div class="nested-b-col">
-              <div class="b-lbl med" style="font-size:.63rem;">❓ Maksud Tak Dikenal</div>
+              <div class="b-lbl med" style="font-size:.61rem;">❓ Unknown</div>
               <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-              <div class="node err" style="min-width:110px;max-width:135px;font-size:.68rem;">Minta Pengguna Mengulang</div>
+              <div class="node err" style="min-width:95px;max-width:125px;font-size:.63rem;">Minta Mengulang</div>
             </div>
           </div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-          <div class="node proc">📢 Tampilkan Prompt Coba Lagi di Layar</div>
+          <div class="node proc">📢 Tampilkan Prompt Coba Lagi</div>
           <div class="arr loop"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="loop-lbl">↺ Coba Lagi → Input Suara</div>
         </div>
 
-        <div class="b-col" style="flex:1;padding:0 1rem;">
+        <div class="mob-branch-sep">— ATAU —</div>
+
+        <!-- VALID -->
+        <div class="b-col" style="flex:1;padding:0 .75rem;">
           <div class="t-line-v"></div><div class="t-arr-down"></div>
-          <div class="no-lbl">✓ VALID — Perintah Diterima</div>
+          <div class="no-lbl">✓ VALID — Diterima</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-          <div class="node proc">🧠 Uraikan Perintah &amp; Ekstrak Maksud</div>
+          <div class="node proc">🧠 Uraikan &amp; Ekstrak Maksud</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="node proc">🔗 Kueri Basis Data Moodle LMS</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
@@ -529,7 +776,7 @@ footer p+p{margin-top:.3rem;}
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="node proc">🔈 Konversi Teks ke Ucapan (TTS)</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-          <div class="node out">🔊 Putar Respons Audio ke Pengguna</div>
+          <div class="node out">🔊 Putar Respons Audio</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="node out">📋 Tampilkan Transkrip Teks</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
@@ -538,48 +785,50 @@ footer p+p{margin-top:.3rem;}
       </div>
     </div>
 
-    <div class="arr" style="margin-top:12px;"><div class="arr-line"></div><div class="arr-head"></div></div>
+    <div class="arr" style="margin-top:10px;"><div class="arr-line"></div><div class="arr-head"></div></div>
     <div class="node term end-nd">■ SELESAI</div>
   </div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════════
-     SISTEM 4 — SISTEM DETEKSI KECURANGAN
-══════════════════════════════════════════════════ -->
-<section class="section s4">
+<!-- ══════════════════════════════════════════════
+     SISTEM 4 — DETEKSI KECURANGAN
+══════════════════════════════════════════════ -->
+<section class="section s4" id="s4">
+  <div class="sec-badge">Sistem 4</div>
   <div class="section-head">
     <div class="sec-num">4</div>
     <div>
       <div class="sec-title">Sistem Deteksi Kecurangan</div>
-      <div class="sec-desc">Pemantauan ujian secara real-time menggunakan beragam sinyal perilaku, menganalisis anomali, dan mengeskalasi pelanggaran sesuai tingkat keparahannya.</div>
+      <div class="sec-desc">Pemantauan ujian real-time dengan sinyal perilaku, analisis anomali, dan eskalasi pelanggaran sesuai tingkat keparahan.</div>
     </div>
   </div>
 
   <div class="hover-info">
     <div class="hover-info-inner">
       <strong>💡 Penjelasan Sistem</strong>
-      Sistem ini memantau perilaku mahasiswa selama ujian online secara real-time melalui berbagai sinyal: gerakan mata, perpindahan tab, aktivitas salin-tempel, dan pola waktu respons. Semua data diagregasi lalu dianalisis oleh algoritma deteksi anomali. Jika aktivitas mencurigakan terdeteksi, instruktur langsung diberi peringatan dan tindakan diambil sesuai tingkat keparahan — mulai dari peringatan resmi hingga penghentian sesi ujian dan pencatatan pelanggaran. Perilaku normal dilanjutkan dengan pemantauan aktif secara berulang.
+      Sistem memantau perilaku selama ujian online secara real-time: gerakan mata, perpindahan tab, salin-tempel, dan pola waktu respons. Data diagregasi dan dianalisis algoritma deteksi anomali. Jika mencurigakan, pengawas langsung diperingatkan dan tindakan diambil sesuai keparahan — peringatan resmi atau penghentian ujian. Perilaku normal dilanjutkan dengan pemantauan aktif berulang.
     </div>
   </div>
+  <p class="tap-hint">👆 Ketuk kartu untuk melihat penjelasan</p>
 
-  <p class="sec-note" style="margin-top:.85rem;">Perilaku normal → pemantauan aktif berkelanjutan &nbsp;|&nbsp; Pelanggaran → eskalasi ke instruktur &amp; catatan nilai</p>
+  <p class="sec-note" style="margin-top:.75rem;">Normal → pemantauan aktif berulang &nbsp;|&nbsp; Pelanggaran → eskalasi &amp; catatan nilai</p>
 
   <div class="fc">
     <div class="node term">▶ MULAI</div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
-    <div class="node inp">📋 Peserta Didik Memulai Ujian Online Terproteksi</div>
+    <div class="node inp">📋 Peserta Didik Memulai Ujian Terproteksi</div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
     <div class="node proc">🔧 Inisialisasi Sistem Pengawasan</div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
     <div class="node-row">
-      <div class="node inp sm">👁️ Pelacakan Gerakan Mata</div>
-      <div class="node inp sm">🖥️ Deteksi Perpindahan Tab</div>
-      <div class="node inp sm">📋 Monitor Copy-Paste</div>
-      <div class="node inp sm">⏱️ Pola Waktu Respons</div>
+      <div class="node inp sm">👁️ Gerakan Mata</div>
+      <div class="node inp sm">🖥️ Pindah Tab</div>
+      <div class="node inp sm">📋 Copy-Paste</div>
+      <div class="node inp sm">⏱️ Pola Waktu</div>
     </div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
@@ -587,52 +836,56 @@ footer p+p{margin-top:.3rem;}
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
     <div class="node proc">🤖 Jalankan Algoritma Deteksi Anomali
-            <small>(Machine Learning)</small>
+      <small>(Machine Learning)</small>
     </div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
     <div class="dia-wrap">
-      <div class="diamond"><div class="dia-txt">Aktivitas Mencurigakan Terdeteksi?</div></div>
+      <div class="diamond"><div class="dia-txt">Aktivitas Mencurigakan?</div></div>
     </div>
 
-    <div class="branch-outer" style="max-width:760px;width:100%;">
+    <div class="branch-outer" style="max-width:740px;width:100%;">
       <div class="t-bar">
         <div class="t-seg" style="align-items:flex-end;"><div class="t-line-h"></div></div>
         <div class="t-seg" style="align-items:flex-start;"><div class="t-line-h"></div></div>
       </div>
-      <div style="display:flex;flex-direction:row;width:100%;gap:0;align-items:flex-start;justify-content:space-between;">
+      <div class="b-cols">
 
-        <div class="b-col" style="flex:1;padding:0 1rem;">
+        <!-- YA -->
+        <div class="b-col" style="flex:1;padding:0 .75rem;">
           <div class="t-line-v"></div><div class="t-arr-down"></div>
           <div class="yes-lbl">⚠ YA — Anomali Ditemukan</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="node err">📝 Catat Insiden Pelanggaran</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-          <div class="node err">🔔 Beri Peringatan Pengawas secara Real-Time</div>
+          <div class="node err">🔔 Peringatkan Pengawas Real-Time</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="dia-wrap">
             <div class="diamond sm"><div class="dia-txt">Tingkat Keparahan?</div></div>
           </div>
-          <div class="mini-arr"><div class="arr-line" style="height:14px;"></div></div>
+          <div class="mini-arr"><div class="arr-line" style="height:12px;"></div></div>
           <div class="nested-b-row">
             <div class="nested-b-col">
-              <div class="b-lbl low" style="font-size:.63rem;">🚨 Keparahan TINGGI</div>
+              <div class="b-lbl low" style="font-size:.61rem;">🚨 TINGGI</div>
               <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-              <div class="node err" style="min-width:110px;max-width:140px;font-size:.68rem;">🚫 Blokir &amp; Hentikan Ujian</div>
+              <div class="node err" style="min-width:95px;max-width:130px;font-size:.63rem;">🚫 Blokir &amp; Hentikan Ujian</div>
             </div>
             <div class="nested-b-col">
-              <div class="b-lbl med" style="font-size:.63rem;">⚡ Keparahan RENDAH</div>
+              <div class="b-lbl med" style="font-size:.61rem;">⚡ RENDAH</div>
               <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-              <div class="node err" style="min-width:110px;max-width:140px;font-size:.68rem;">⚠️ Keluarkan Peringatan Resmi</div>
+              <div class="node err" style="min-width:95px;max-width:130px;font-size:.63rem;">⚠️ Peringatan Resmi</div>
             </div>
           </div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-          <div class="node out">📊 Tandai Peserta Didik di Catatan Nilai</div>
+          <div class="node out">📊 Tandai di Catatan Nilai</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="node out">📤 Kirim Laporan Insiden</div>
         </div>
 
-        <div class="b-col" style="flex:1;padding:0 1rem;">
+        <div class="mob-branch-sep">— ATAU —</div>
+
+        <!-- TIDAK -->
+        <div class="b-col" style="flex:1;padding:0 .75rem;">
           <div class="t-line-v"></div><div class="t-arr-down"></div>
           <div class="no-lbl">✓ TIDAK — Perilaku Normal</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
@@ -641,7 +894,7 @@ footer p+p{margin-top:.3rem;}
           <div class="node proc">🔄 Lanjutkan Pengawasan Aktif</div>
           <div class="arr loop"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="loop-lbl">↺ Ulangi → Analisis Pola</div>
-          <div style="height:16px;"></div>
+          <div style="height:12px;"></div>
           <div class="node out">🏁 Sesi Ujian Selesai</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="node out">📤 Kirim Hasil ke Buku Nilai</div>
@@ -651,32 +904,34 @@ footer p+p{margin-top:.3rem;}
       </div>
     </div>
 
-    <div class="arr" style="margin-top:12px;"><div class="arr-line"></div><div class="arr-head"></div></div>
+    <div class="arr" style="margin-top:10px;"><div class="arr-line"></div><div class="arr-head"></div></div>
     <div class="node term end-nd">■ SELESAI</div>
   </div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════════
-     SISTEM 5 — PEMBELAJARAN BERBASIS PEMBUAT KONTEN
-══════════════════════════════════════════════════ -->
-<section class="section s5">
+<!-- ══════════════════════════════════════════════
+     SISTEM 5 — PEMBUAT KONTEN
+══════════════════════════════════════════════ -->
+<section class="section s5" id="s5">
+  <div class="sec-badge">Sistem 5</div>
   <div class="section-head">
     <div class="sec-num">5</div>
     <div>
       <div class="sec-title">Pembelajaran Berbasis Pembuat Konten</div>
-      <div class="sec-desc">Mengelola siklus hidup konten pembelajaran secara penuh — pembuatan, pemeriksaan kualitas otomatis, tinjauan sejawat opsional, publikasi, dan loop perbaikan berkelanjutan berbasis umpan balik mahasiswa.</div>
+      <div class="sec-desc">Mengelola siklus hidup konten — pembuatan, pengunggahan, evaluasi kualitas oleh peserta didik, dan perbaikan berkelanjutan berbasis umpan balik.</div>
     </div>
   </div>
 
   <div class="hover-info">
     <div class="hover-info-inner">
       <strong>💡 Penjelasan Sistem</strong>
-      Sistem ini mengelola seluruh siklus hidup konten pembelajaran dari pembuatan hingga publikasi. Konten yang dibuat (video, bacaan, kuis, tugas interaktif) diunggah dan diperiksa secara otomatis berdasarkan format, tata bahasa, dan kesesuaian tujuan pembelajaran. Konten yang tidak memenuhi standar dikembalikan ke pembuat untuk direvisi. Konten yang lolos dapat melalui tinjauan sejawat sebelum disetujui admin dan diterbitkan. Umpan balik mahasiswa setelah publikasi digunakan sebagai bahan perbaikan konten secara berkelanjutan.
+      Sistem mengelola siklus hidup konten dari pembuatan hingga evaluasi berkelanjutan. Konten (video, bacaan, kuis, tugas interaktif) diunggah ke Moodle lalu diakses peserta didik. Jika peserta belum puas dengan kualitas atau kebutuhan, umpan balik dikirim ke kreator untuk ditanggapi dan disesuaikan. Jika sudah terpenuhi, konten terus ditingkatkan berdasarkan umpan balik yang terkumpul.
     </div>
   </div>
+  <p class="tap-hint">👆 Ketuk kartu untuk melihat penjelasan</p>
 
-  <p class="sec-note" style="margin-top:.85rem;">Konten buruk → direvisi &amp; diunggah ulang &nbsp;|&nbsp; Konten terbit → umpan balik mahasiswa → perbaikan berkelanjutan</p>
+  <p class="sec-note" style="margin-top:.75rem;">Kurang → revisi &amp; unggah ulang &nbsp;|&nbsp; Cukup → evaluasi berkelanjutan</p>
 
   <div class="fc">
     <div class="node term">▶ MULAI</div>
@@ -691,40 +946,34 @@ footer p+p{margin-top:.3rem;}
     <div class="node-row">
       <div class="node proc sm">🎬 Kuliah Video</div>
       <div class="node proc sm">📄 Materi Bacaan</div>
-      <div class="node proc sm">❓ Kuis / Penilaian</div>
-      <div class="node proc sm">🎮 Tugas Interaktif</div>
+      <div class="node proc sm">❓ Kuis</div>
+      <div class="node proc sm">🎮 Interaktif</div>
     </div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
     <div class="node proc">⬆️ Unggah Konten ke Platform Moodle</div>
     <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
-    <div class="node proc">🎓 Peserta Didik Mengakses Konten Pembelajaran</div>
-    <div class="arr"><div class="arr-line" style="height:6px;"></div></div>
-
-    <div style="display:flex;flex-direction:row;align-items:center;gap:6px;margin-bottom:6px;">
-      <!-- <div class="node proc sm" style="font-size:.66rem;">📐 Pemeriksaan Format</div>
-      <div class="node proc sm" style="font-size:.66rem;">🔤 Tata Bahasa &amp; Kejelasan</div>
-      <div class="node proc sm" style="font-size:.66rem;">🎯 Kesesuaian Tujuan Pembelajaran</div> -->
-    </div>
-    <div class="arr"><div class="arr-line" style="height:8px;"></div><div class="arr-head"></div></div>
+    <div class="node proc">🎓 Peserta Didik Mengakses Konten</div>
+    <div class="arr"><div class="arr-line"></div><div class="arr-head"></div></div>
 
     <div class="dia-wrap">
-      <div class="diamond"><div class="dia-txt">Puas dengan Kualitas dan Kebutuhan?</div></div>
+      <div class="diamond"><div class="dia-txt">Puas dengan Kualitas &amp; Kebutuhan?</div></div>
     </div>
 
-    <div class="branch-outer" style="max-width:760px;width:100%;">
+    <div class="branch-outer" style="max-width:740px;width:100%;">
       <div class="t-bar">
         <div class="t-seg" style="align-items:flex-end;"><div class="t-line-h"></div></div>
         <div class="t-seg" style="align-items:flex-start;"><div class="t-line-h"></div></div>
       </div>
-      <div style="display:flex;flex-direction:row;width:100%;gap:0;align-items:flex-start;justify-content:space-between;">
+      <div class="b-cols">
 
-        <div class="b-col" style="flex:1;padding:0 1rem;">
+        <!-- KURANG -->
+        <div class="b-col" style="flex:1;padding:0 .75rem;">
           <div class="t-line-v"></div><div class="t-arr-down"></div>
-          <div class="yes-lbl" style="color:#dc2626;">✗ KURANG — Belum Terpenuhi</div>
+          <div class="yes-lbl">✗ KURANG — Belum Terpenuhi</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-          <div class="node err">📋 Buat Laporan Kebutuhan, Sampaikan Pendapat atau Pertanyaan</div>
+          <div class="node err">📋 Buat Laporan Kebutuhan &amp; Sampaikan Pendapat</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="node err">📧 Kirim Umpan Balik ke Pengajar/Pembuat</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
@@ -735,34 +984,14 @@ footer p+p{margin-top:.3rem;}
           <div class="loop-lbl">↺ Unggah Ulang Sesuai Kebutuhan</div>
         </div>
 
-        <div class="b-col" style="flex:1;padding:0 1rem;">
+        <div class="mob-branch-sep">— ATAU —</div>
+
+        <!-- CUKUP -->
+        <div class="b-col" style="flex:1;padding:0 .75rem;">
           <div class="t-line-v"></div><div class="t-arr-down"></div>
           <div class="no-lbl">✓ CUKUP — Sudah Terpenuhi</div>
-          <!-- <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div> -->
-          <!-- <div class="dia-wrap">
-            <div class="diamond sm"><div class="dia-txt">Tinjauan Sejawat Diperlukan?</div></div>
-          </div> -->
-          <!-- <div class="mini-arr"><div class="arr-line" style="height:14px;"></div></div> -->
-          <!-- <div class="nested-b-row">
-            <div class="nested-b-col">
-              <div class="b-lbl low" style="font-size:.63rem;color:#ea580c;border-color:#fdba74;background:#fff7ed;">YA</div>
-              <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-              <div class="node proc" style="min-width:120px;max-width:145px;font-size:.68rem;">👥 Putaran Tinjauan Sejawat</div>
-              <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-              <div class="node proc" style="min-width:120px;max-width:145px;font-size:.68rem;">📝 Integrasikan Umpan Balik</div>
-              <div class="arr loop"><div class="arr-line" style="height:12px;"></div><div class="arr-head" style="border-top-color:var(--loop);"></div></div>
-              <div class="loop-lbl" style="font-size:.63rem;">↺ Periksa Ulang jika Besar</div>
-            </div>
-            <div class="nested-b-col">
-              <div class="b-lbl high" style="font-size:.63rem;">TIDAK</div>
-              <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-              <div class="node proc" style="min-width:120px;max-width:145px;font-size:.68rem;">🛡️ Persetujuan Final Admin</div>
-              <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-              <div class="node out" style="min-width:120px;max-width:145px;font-size:.68rem;">🌐 Terbitkan ke Platform</div>
-            </div>
-          </div> -->
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
-          <div class="node proc">💡 Memepertahankan dan Meningkatkan Kualitas Konten</div>
+          <div class="node proc">💡 Mempertahankan &amp; Meningkatkan Kualitas Konten</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
           <div class="node proc">📊 Kumpulkan Umpan Balik Peserta Didik</div>
           <div class="mini-arr"><div class="arr-line"></div><div class="arr-head"></div></div>
@@ -773,7 +1002,7 @@ footer p+p{margin-top:.3rem;}
       </div>
     </div>
 
-    <div class="arr" style="margin-top:12px;"><div class="arr-line"></div><div class="arr-head"></div></div>
+    <div class="arr" style="margin-top:10px;"><div class="arr-line"></div><div class="arr-head"></div></div>
     <div class="node term end-nd">■ SELESAI</div>
   </div>
 </section>
@@ -782,9 +1011,47 @@ footer p+p{margin-top:.3rem;}
 <!-- ══════════════ FOOTER ══════════════ -->
 <footer>
   <p>📄 Ide Pengembangan LMS — Diagram Alur Sistem &nbsp;·&nbsp; Kelompok 8</p>
-  <p>5 Sistem: Optimasi UX &nbsp;·&nbsp; Pembelajaran Adaptif &nbsp;·&nbsp; Asisten Suara &nbsp;·&nbsp; Deteksi Kecurangan &nbsp;·&nbsp; Pembuat Konten</p>
-  <p style="margin-top:.6rem;font-size:.7rem;color:#94a3b8;">Dibuat dengan HTML + CSS Murni &nbsp;·&nbsp; Tanpa library eksternal &nbsp;·&nbsp; Untuk keperluan akademik</p>
+  <p>5 Sistem: Optimasi UX · Pembelajaran Adaptif · Asisten Suara · Deteksi Kecurangan · Pembuat Konten</p>
+  <p style="margin-top:.5rem;font-size:.67rem;color:#94a3b8;">HTML + CSS Murni &nbsp;·&nbsp; Tanpa library eksternal &nbsp;·&nbsp; Untuk keperluan akademik</p>
 </footer>
 
+<!-- ══════════════ JS: TOUCH TOGGLE ══════════════ -->
+<script>
+(function(){
+  // On touch devices: tap section header to expand explanation panel
+  var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  if(!isTouchDevice) return;
+
+  document.querySelectorAll('.section').forEach(function(sec){
+    sec.addEventListener('click', function(e){
+      // Only toggle when tapping the header area, not flowchart nodes
+      var isHeader = e.target.closest('.section-head') ||
+                     e.target.closest('.hover-info') ||
+                     e.target.closest('.tap-hint') ||
+                     e.target.closest('.sec-badge');
+      if(!isHeader) return;
+
+      var isActive = sec.classList.contains('active-touch');
+      // Close all
+      document.querySelectorAll('.section').forEach(function(s){
+        s.classList.remove('active-touch');
+      });
+      // Toggle current
+      if(!isActive) sec.classList.add('active-touch');
+    });
+  });
+
+  // Smooth-scroll nav pills
+  document.querySelectorAll('.nav-pill').forEach(function(pill){
+    pill.addEventListener('click', function(e){
+      var target = document.querySelector(this.getAttribute('href'));
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>
